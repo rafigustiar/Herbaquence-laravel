@@ -2,6 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Rute ini akan menangkap SEMUA permintaan web dan menyerahkannya
+| ke view 'app.blade.php'. Dari sana, React Router akan mengambil alih.
+|
+*/
+
+Route::get('/{any?}', function () {
+    return view('app');
+})->where('any', '.*');
