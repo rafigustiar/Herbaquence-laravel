@@ -26,8 +26,8 @@ const ContactUs = () => {
     {
       icon: <Globe className="h-8 w-8" />,
       title: "Website",
-      value: "www.herbaquence.com",
-      link: "https://www.herbaquence.com",
+      value: "www.herbaquence.site",
+      link: "https://www.herbaquence.site",
       linkText: "Visit Website",
       description: "Jelajahi koleksi lengkap produk kami",
       color: "from-blue-500 to-cyan-600",
