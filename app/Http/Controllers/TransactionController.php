@@ -47,6 +47,9 @@ class TransactionController extends Controller
         // Send invoice email
         Mail::to($order->email)->send(new InvoiceMail($order));
 
-        return response()->json(['message' => 'Order placed and invoice sent.']);
+        return response()->json([
+            'message' => 'Order placed and invoice sent.',
+            'orderId' => $order->id // Menambahkan ID dari order yang baru dibuat
+        ], 201);
     }
 }
