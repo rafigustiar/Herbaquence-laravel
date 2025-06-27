@@ -7,12 +7,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/components/CartProvider";
-import { useToast } from "@/components/ui/use-toast"; // Opsional: untuk notifikasi lebih baik
+import { useToast } from "@/components/ui/use-toast"; // Optional: for better notifications
 
 const Cart = () => {
   const { state, updateQuantity, removeItem, clearCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
-  const [isProcessingOrder, setIsProcessingOrder] = useState(false); // State untuk loading saat submit
+  const [isProcessingOrder, setIsProcessingOrder] = useState(false); // State for loading during submission
   const [checkoutData, setCheckoutData] = useState({
     name: "",
     email: "",
@@ -20,8 +20,8 @@ const Cart = () => {
     address: "",
   });
 
-  const navigate = useNavigate(); // Inisialisasi useNavigate untuk navigasi
-  const { toast } = useToast(); // Inisialisasi useToast (jika ingin pakai Shadcn Toast)
+  const navigate = useNavigate(); // Initialize useNavigate for navigation
+  const { toast } = useToast(); // Initialize useToast (if using Shadcn Toast)
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("id-ID", {
@@ -37,8 +37,8 @@ const Cart = () => {
   const handleCheckout = async () => {
     if (state.items.length === 0) {
       toast({
-        title: "Keranjang Kosong",
-        description: "Tidak ada produk di keranjang Anda untuk dipesan.",
+        title: "Cart Empty",
+        description: "There are no products in your cart to order.",
         variant: "destructive",
       });
       return;
@@ -46,55 +46,88 @@ const Cart = () => {
 
     if (!isCheckoutValid) {
       toast({
-        title: "Data Checkout Tidak Lengkap",
-        description: "Mohon isi semua informasi checkout dengan benar.",
+        title: "Incomplete Checkout Data",
+        description: "Please fill in all checkout information correctly.",
         variant: "destructive",
       });
       return;
     }
 
-    setIsProcessingOrder(true); // Aktifkan status memproses
+    setIsProcessingOrder(true); // Activate processing status
 
-    // --- BAGIAN SIMULASI BACKEND (HANYA UNTUK TESTING FRONTEND) ---
-    // Kode ini akan dihapus saat integrasi backend sesungguhnya dilakukan.
+    // --- START: ACTUAL BACKEND INTEGRATION ---
+    // This code will call your Laravel API
+    const orderPayload = {
+      full_name: checkoutData.name,
+      email: checkoutData.email,
+      phone_number: checkoutData.phone,
+      delivery_address: checkoutData.address,
+      items: state.items.map(item => ({
+        // Ensure these match your Laravel backend validation
+        product_id: item.product.id,
+        quantity: item.quantity,
+        size: item.size, // Assuming backend also needs size
+        price: item.price, // Price should be validated/re-calculated on the backend for security
+        product_name: item.product.name // Product name for convenience on the backend
+      })),
+      subtotal: state.total, // This will be validated/re-calculated on the backend
+      shipping: shippingCost, // This will be validated/re-calculated on the backend
+      total: totalWithShipping, // This will be validated/re-calculated on the backend
+    };
+
     try {
-      // Simulasi delay jaringan (misal: 1.5 detik)
-      await new Promise(resolve => setTimeout(resolve, 1500)); 
-      
-      // Simulasi Order ID yang diterima dari backend
-      const simulatedOrderId = `DEMO-${Date.now().toString().slice(-6)}`; 
-
-      clearCart(); // Kosongkan keranjang setelah 'pesanan' berhasil
-
-      // Arahkan ke halaman konfirmasi
-      navigate('/checkout/confirmation', { state: { orderId: simulatedOrderId } });
-
-      // Tampilkan notifikasi sukses
-      toast({
-        title: "Pesanan Berhasil Ditempatkan (Demo)!",
-        description: `Ini adalah simulasi. ID Pesanan: #${simulatedOrderId}.`,
-        duration: 5000,
+      const response = await fetch('/api/place-order', { // Call the Laravel API
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json', // Important for JSON response from Laravel
+        },
+        body: JSON.stringify(orderPayload),
       });
 
-      // Reset form checkout
-      setIsCheckingOut(false);
-      setCheckoutData({ name: "", email: "", phone: "", address: "" });
+      const result = await response.json();
 
+      if (response.ok) {
+        // Order successfully processed on the backend
+        const newOrderId = result.orderId; // Get the orderId from the backend response
+
+        clearCart(); // Empty the cart on the frontend
+
+        // Navigate to the confirmation page
+        navigate('/checkout/confirmation', { state: { orderId: newOrderId } });
+
+        // Display success notification
+        toast({
+            title: "Order Placed Successfully!",
+            description: `Invoice has been sent to your email. Order ID: #${newOrderId}`,
+            duration: 5000,
+        });
+
+        // Reset checkout form
+        setIsCheckingOut(false);
+        setCheckoutData({ name: "", email: "", phone: "", address: "" });
+
+      } else {
+        // Error from the backend (e.g., validation failed, or server error)
+        console.error("Backend error:", result);
+        toast({
+            title: "Failed to Place Order",
+            description: result.message || "An error occurred while processing your order. Please try again.",
+            variant: "destructive",
+        });
+      }
     } catch (error) {
-      // Dalam simulasi ini, error tidak mungkin terjadi, tapi di kode asli ini penting
-      console.error("Terjadi error simulasi:", error);
+      // Network error or other frontend errors
+      console.error("Network or other error:", error);
       toast({
-        title: "Terjadi Kesalahan Simulasi",
-        description: "Simulasi penempatan pesanan gagal.",
-        variant: "destructive",
+          title: "An Error Occurred",
+          description: "Could not connect to the server. Please check your internet connection.",
+          variant: "destructive",
       });
     } finally {
-      setIsProcessingOrder(false); // Nonaktifkan status memproses
+      setIsProcessingOrder(false); // Deactivate processing status
     }
-    // --- AKHIR BAGIAN SIMULASI BACKEND ---
-
-    // Catatan: Kode panggil API backend sesungguhnya akan diletakkan di sini
-    // setelah kamu selesai menguji frontend dan siap mengintegrasikan backend.
+    // --- END: ACTUAL BACKEND INTEGRATION ---
   };
 
   const handleInputChange = (
@@ -341,11 +374,11 @@ const Cart = () => {
 
                   <Button
                     onClick={handleCheckout}
-                    disabled={!isCheckoutValid || isProcessingOrder} // Disable saat validasi & proses
+                    disabled={!isCheckoutValid || isProcessingOrder} // Disable when validating & processing
                     className="w-full bg-primary hover:bg-primary/90"
                     size="lg"
                   >
-                    {isProcessingOrder ? "Memproses..." : `Place Order - ${formatPrice(totalWithShipping)}`}
+                    {isProcessingOrder ? "Processing..." : `Place Order - ${formatPrice(totalWithShipping)}`}
                   </Button>
 
                   <p className="text-xs text-gray-600 text-center">

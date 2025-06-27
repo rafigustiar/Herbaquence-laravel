@@ -166,15 +166,15 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </h3>
               <ul className="space-y-2 text-sm text-gray-600">
                 <li>hello@herbaquence.com</li>
-                <li>+62 123 456 7890</li>
-                <li>Jakarta, Indonesia</li>
+                <li>+62 895-3660-49712</li>
+                <li>Malang, Indonesia</li>
               </ul>
             </div>
           </div>
 
           <div className="border-t border-gray-200 mt-8 pt-8">
             <p className="text-center text-sm text-gray-600">
-              © 2024 Herbaquence. All rights reserved.
+              © 2025 Herbaquence. All rights reserved.
             </p>
           </div>
         </div>

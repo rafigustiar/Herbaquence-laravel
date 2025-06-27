@@ -35,8 +35,8 @@ const ContactUs = () => {
     {
       icon: <Phone className="h-8 w-8" />,
       title: "Nomor HP",
-      value: "+62 812-3456-7890",
-      link: "tel:+6281234567890",
+      value: "+62 895-3660-49712",
+      link: "tel:+62895-3660-49712",
       linkText: "Call Now",
       description: "Hubungi kami untuk konsultasi produk",
       color: "from-green-500 to-emerald-600",
@@ -53,13 +53,13 @@ const ContactUs = () => {
     {
       icon: <MapPin className="h-6 w-6" />,
       title: "Alamat",
-      value: "Jl. Sehat Berkah No. 123, Jakarta Selatan",
+      value: "Jl. Notojoyo no 324A, Tegalgondo, Karangploso, Kabupaten Malang, Jawa Timur",
       link: "https://maps.google.com",
     },
     {
       icon: <Clock className="h-6 w-6" />,
       title: "Jam Operasional",
-      value: "Senin - Jumat: 09:00 - 18:00",
+      value: "Senin - Jumat: 12:00 - 18:00",
       link: null,
     },
   ];
