@@ -26,7 +26,7 @@ const ContactUs = () => {
     {
       icon: <Globe className="h-8 w-8" />,
       title: "Website",
-      value: "www.herbaquence.site",
+      value: "hello@herbaquence.com",
       link: "https://www.herbaquence.site",
       linkText: "Visit Website",
       description: "Jelajahi koleksi lengkap produk kami",

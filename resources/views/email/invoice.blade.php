@@ -170,7 +170,7 @@
                             <p style="margin: 3px 0;">Jl. Notojoyo No. 324A</p>
                             <p style="margin: 3px 0;">Malang, 65152</p>
                             <p style="margin: 3px 0;">Indonesia</p>
-                            <p style="margin: 3px 0;"><a href="mailto:hello@herbaquence.com" style="color: #4CAF50; text-decoration: none;">herbaquence@gmail.com</a></p>
+                            <p style="margin: 3px 0;"><a href="mailto:hello@herbaquence.com" style="color: #4CAF50; text-decoration: none;">hello@herbaquence.com</a></p>
                             <p style="margin: 3px 0;">+62 895-3660-49712</p>
                         </div>
                     </td>
@@ -264,7 +264,7 @@
         <div class="footer-section" style="background-color: #f8f8f8; padding: 25px 30px; text-align: center; font-size: 12px; color: #888888; border-radius: 0 0 8px 8px;">
             <h3 style="font-size: 16px; color: #333333; margin: 0 0 10px; font-weight: bold;">Terima kasih atas pesanan Anda! 🌿</h3>
             <p style="margin: 5px 0;">Pesanan Anda akan diproses dalam 1-2 hari kerja. Anda akan menerima email konfirmasi pengiriman beserta nomor resi.</p>
-            <p style="margin: 5px 0;">📧 <a href="mailto:hello@herbaquence.com" style="color: #4CAF50; text-decoration: none;">herbaquence@gmail.com</a> &nbsp; 📱 +62 895-3660-49712 &nbsp; 🌐 <a href="http://www.herbaquence.site" style="color: #4CAF50; text-decoration: none;">www.herbaquence.site</a></p>
+            <p style="margin: 5px 0;">📧 <a href="mailto:hello@herbaquence.com" style="color: #4CAF50; text-decoration: none;">hello@herbaquence.com</a> &nbsp; 📱 +62 895-3660-49712 &nbsp; 🌐 <a href="http://www.herbaquence.site" style="color: #4CAF50; text-decoration: none;">www.herbaquence.site</a></p>
             <p style="margin: 15px 0 0; font-size: 10px; color: #aaaaaa;">Invoice ini dibuat secara otomatis oleh sistem Herbaquence</p>
             <p style="margin: 5px 0;">&copy; {{ date('Y') }} Herbaquence Drinks. All rights reserved.</p>
         </div>
